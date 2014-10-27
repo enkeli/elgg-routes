@@ -12,7 +12,8 @@ elgg_register_event_handler('init', 'system', 'routes_init', 100);
  */
 function routes_init() {
     
-    Controller::add('test');
+    //Example
+    Route::add('test');
 }
 
 /**
@@ -20,5 +21,5 @@ function routes_init() {
  */
 function route_handler($page, $handler) {
     
-    return Controller::route($page, $handler);
+    return Route::find($page, $handler);
 }

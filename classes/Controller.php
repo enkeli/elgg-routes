@@ -3,9 +3,9 @@
 /**
  * Base controller for routing
  *
- * Provides routing functions
+ * Root class for route controllers
  *
- * @package Aclook
+ * @package Routes
  * @author Gabriel Vargas <angel.wrt@gmail.com>
  */
 class Controller
@@ -76,27 +76,4 @@ class Controller
         
         
     }
-    
-    /**
-    * Register a page to be handled
-    * @param  string $page The name of the page to be handled
-    */
-    static function add($page) {
-        elgg_register_page_handler($page, 'route_handler');
-    }
-    
-    /**
-    * Find the controller to handle the request
-    *
-    * @param  array $page Array with the URL segments
-    * @param  string $handler The page requested
-    */
-    static function route($page, $handler) {
-        
-        $controller = ucfirst($handler)."Controller";
-        $controller = new $controller($page);
-        
-        return $controller->run();
-    }
-    
 }
