@@ -26,10 +26,17 @@ class Controller
     protected $entity = null;
     
     /**
+    * @var Page $page The page to be served
+    */ 
+    protected $page = null;
+
+    
+    /**
     * Route not found
     */
     function __call($func, $args) {
-        return false;
+        throw new Exception('404');
+        
     }
     
     /**
@@ -62,18 +69,33 @@ class Controller
     }
     
     /**
+    * Serve page
+    */
+    protected function serve() {
+        
+        if (empty($this->page)) {
+            throw new Exception('No page');
+        }
+        else {
+            $this->page->view();
+        }
+    }
+    
+    /**
     * Execute the function that will handle the request
     */ 
     public function run() {
         $func = $this->getSegment(0);
         
-        if($func){
-            return $this->$func();
-        }
-        else {
-            return $this->index();
+        if(empty($func)){
+            $func = 'index';
         }
         
-        
+        try {
+            $this->$func();
+            $this->serve();
+        } catch (Exception $e) {
+            return false;  
+        }
     }
 }
